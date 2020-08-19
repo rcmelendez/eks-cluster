@@ -1,0 +1,40 @@
+# A ClusterConfig template using two Managed Nodes with an existing VPC and 
+# subnets, and CloudWatch logging enabled.
+# Udacity Cloud DevOps Engineer Nanodegree Capstone project.
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: capstone
+  region: us-east-2
+
+
+vpc:
+  id: "vpc-049fd5e0a5bd7810b"
+  subnets:
+    public:
+      us-east-2a:
+        id: "subnet-061c91a7baf5c4e28"
+
+      us-east-2b:
+        id: "subnet-0937572b74f69208f"
+
+      us-east-2c:
+        id: "subnet-045132daed1d60fad"
+
+
+managedNodeGroups:
+- name: ng-1
+  instanceType: t3.medium
+  desiredCapacity: 2
+  ssh:
+    publicKeyName: roberto-ssh
+  securityGroups:
+    attachIDs: ["sg-0cf1ad7951f6a6117"]
+
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["audit", "authenticator", "controllerManager"]
+
