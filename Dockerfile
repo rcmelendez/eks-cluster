@@ -1,7 +1,6 @@
-FROM nginx
+FROM nginx:latest
 
 COPY wrapper.sh /
-
 COPY html /usr/share/nginx/html
 
 CMD  ["./wrapper.sh"]
