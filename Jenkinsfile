@@ -8,11 +8,7 @@ pipeline {
   stages {
     stage('Lint Dockerfile') {
       steps{
-        sh '''
-           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-Linux-x86_64 && \
-           chmod +x /bin/hadolint
-           hadolint Dockerfile
-           '''
+        sh "hadolint Dockerfile"
       }
     }
     stage('Build Docker image') {
