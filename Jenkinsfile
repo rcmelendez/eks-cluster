@@ -1,40 +1,14 @@
 pipeline {
-  environment {
-    registry = "rcmelendez/cats"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
   agent any
   stages {
-    stage('Lint Dockerfile') {
+    stage('Create AWS EKS cluster') {
       steps{
-        sh "hadolint Dockerfile"
+        sh "eksctl create cluster --config-file capstone-cluster.yaml"
       }
     }
-    stage('Security Scan') {
-      steps { 
-        aquaMicroscanner imageName: 'alpine:latest', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
-      }
-    }
-    stage('Build Docker image') {
+    stage('Create kubeconfig file') {
       steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-    stage('Deploy Image to Docker Hub') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage('Remove Docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "aws eks --region us-east-2 update-kubeconfig --name capstone"
       }
     }
   }
