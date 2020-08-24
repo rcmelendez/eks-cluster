@@ -1,11 +1,13 @@
-# eks-cluster
+# AWS EKS cluster
 
-This project creates a Kubernetes cluster on Amazon EKS using a Jenkins 
-pipeline. 
+A CI/CD pipeline that creates a Kubernetes cluster on Amazon EKS using Jenkins. 
+
+The ClusterConfig template generates two managed nodes with an existing VPC and 
+subnets, and CloudWatch logging enabled.
 
 It is part of the Capstone project from Udacity's __[Cloud DevOps Engineer
 Nanodegree](https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991)__ 
-program. For the rest of the project, go to the [capstone-cloud-devops](https://github.com/rcmelendez/capstone-cloud-devops) repo.
+program. For the rest of the files, go to the [capstone-cloud-devops](https://github.com/rcmelendez/capstone-cloud-devops) repo.
 
 ![Build Successful](https://bastion-roberto.s3.us-east-2.amazonaws.com/eks-cluster.png)
 
